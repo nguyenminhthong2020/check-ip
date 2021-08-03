@@ -20,13 +20,13 @@ app.get("/", async (req, res) => {
   let clientIp = requestIp.getClientIp(req);
 
   var ip = clientIp;
-  var thongtin = geoip.lookup(ip);
+  var thongtin1 = geoip.lookup(ip);
   
   let result = {
       ip,
-      thongtin
+      thongtin1
   }
-  
+
   res.status("200").send(result);
 });
 
