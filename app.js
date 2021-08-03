@@ -1,5 +1,6 @@
 const express = require("express")
 const cors = require('cors');
+const ping = require ("net-ping");
 const requestIp = require('request-ip');
 const morgan = require('morgan');
 require('express-async-errors');
@@ -18,7 +19,22 @@ app.use(express.urlencoded({ extended: false }));
 // Index - Home
 app.get('/', (req, res) => { 
     let clientIp = requestIp.getClientIp(req);            
-    res.json(`IP của bạn là ${clientIp}`);
+    // res.json(`IP của bạn là ${clientIp}`);
+
+    const session = ping.createSession ();
+
+    session.pingHost (clientIp, function (error, target) {
+    if (error)
+        res.status(200).send("Thất bại !");
+    else
+    const result = {
+        clientIp,
+        info: target
+    };
+     res.status(200).send(result);
+   });
+
+
 })
 
 
